@@ -27,14 +27,10 @@ def _demand_color(value, vmin, vmax):
 
 # ── FIXED: Safe color generator ───────────────────────────────
 def _demand_colors_for_series(values):
-    if not values or len(values) == 0:
+    if not values:
         return []
-    try:
-        vmin, vmax = min(values), max(values)
-    except Exception:
-        return []
+    vmin, vmax = min(values), max(values)
     return [_demand_color(v, vmin, vmax) for v in values]
-
 
 # ── Forecast Chart ────────────────────────────────────────────
 def render_forecast_chart(forecast_data: dict, anomaly_data: dict = None):
@@ -56,7 +52,7 @@ def render_forecast_chart(forecast_data: dict, anomaly_data: dict = None):
         return
 
     # ✅ Safe colors
-    bar_colors = _demand_colors_for_series(forecast)
+    bar_colors = _demand_colors_for_series(forecast) if forecast else []
 
     fig = go.Figure()
 

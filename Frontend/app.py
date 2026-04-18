@@ -64,14 +64,10 @@ st.divider()
 
 # ── Forecast Section ──────────────────────────────────────────────────────
 st.subheader("Demand Forecast")
-
 forecast_data = results.get("forecast")
 
 if forecast_data and forecast_data.get("forecast"):
-    render_forecast_chart(
-        forecast_data,
-        anomaly_data=results.get("anomalies") if show_anomalies else None,
-    )
+    render_forecast_chart(forecast_data)
 else:
     st.warning("No forecast data available")
 
