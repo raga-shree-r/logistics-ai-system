@@ -1,3 +1,4 @@
+#FINAL FIX APPLIed
 import streamlit as st
 import plotly.graph_objects as go
 from config import CHART_HEIGHT
