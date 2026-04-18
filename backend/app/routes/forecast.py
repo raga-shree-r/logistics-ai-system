@@ -4,7 +4,7 @@ from app.models.schemas import ForecastResponse
 
 router = APIRouter()
 
-@router.get("/", response_model=ForecastResponse)
+@router.get("/")
 def get_forecast():
     result = run_forecast()
 
