@@ -1,7 +1,8 @@
 import streamlit as st
-import pandas as pd
 import plotly.graph_objects as go
 from config import CHART_HEIGHT
+
+# ── Color Mapping ─────────────────────────────────────────────
 
 VIBGYOR = {
     "violet": "#8A5CF6",
@@ -24,34 +25,43 @@ def _demand_color(value, vmin, vmax):
     return VIBGYOR[spectrum[idx]]
 
 
-# ✅ FIXED (handles empty values)
+# ── FIXED: Safe color generator ───────────────────────────────
 def _demand_colors_for_series(values):
-    if not values:
+    if not values or len(values) == 0:
         return []
-    vmin, vmax = min(values), max(values)
+    try:
+        vmin, vmax = min(values), max(values)
+    except Exception:
+        return []
     return [_demand_color(v, vmin, vmax) for v in values]
 
 
+# ── Forecast Chart ────────────────────────────────────────────
 def render_forecast_chart(forecast_data: dict, anomaly_data: dict = None):
-    
-    # ✅ SAFETY CHECK (prevents crash)
-    if not forecast_data or not forecast_data.get("forecast"):
+
+    # ✅ FULL SAFETY CHECK
+    if not forecast_data:
         st.warning("No forecast data available")
         return
 
-    dates    = forecast_data.get("dates", [])
     forecast = forecast_data.get("forecast", [])
+    dates    = forecast_data.get("dates", [])
     lower    = forecast_data.get("lower", [])
     upper    = forecast_data.get("upper", [])
     sku      = forecast_data.get("sku", "")
 
-    # ✅ SAFE color generation
+    # ✅ Prevent empty crash
+    if not forecast or len(forecast) == 0:
+        st.warning("Forecast data is empty")
+        return
+
+    # ✅ Safe colors
     bar_colors = _demand_colors_for_series(forecast)
 
     fig = go.Figure()
 
-    # Confidence band
-    if lower and upper:
+    # ── Confidence band ──
+    if lower and upper and len(lower) == len(upper):
         fig.add_trace(go.Scatter(
             x=dates + dates[::-1],
             y=upper + lower[::-1],
@@ -62,30 +72,30 @@ def render_forecast_chart(forecast_data: dict, anomaly_data: dict = None):
             hoverinfo="skip",
         ))
 
-    # Bars
+    # ── Bars ──
     fig.add_trace(go.Bar(
         x=dates,
         y=forecast,
-        marker_color=bar_colors,
+        marker_color=bar_colors if bar_colors else "#8A5CF6",
         name=f"{sku}",
     ))
 
-    # Line
+    # ── Trend line ──
     fig.add_trace(go.Scatter(
         x=dates,
         y=forecast,
         mode="lines",
-        line=dict(color="#8A5CF6"),
+        line=dict(color="#8A5CF6", width=2),
         name="Trend",
     ))
 
-    # Anomalies
+    # ── Anomalies ──
     if anomaly_data and anomaly_data.get("anomalies"):
         anomalies = anomaly_data["anomalies"]
 
         fig.add_trace(go.Scatter(
-            x=[a["date"] for a in anomalies],
-            y=[a["demand"] for a in anomalies],
+            x=[a.get("date") for a in anomalies],
+            y=[a.get("demand") for a in anomalies],
             mode="markers",
             marker=dict(color="red", size=10),
             name="Anomalies",
