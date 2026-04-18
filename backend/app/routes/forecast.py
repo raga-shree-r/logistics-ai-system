@@ -8,7 +8,12 @@ router = APIRouter()
 def get_forecast():
     result = run_forecast()
 
+    # ✅ FIX: extract values properly
+    forecast_values = [item["predicted_demand"] for item in result]
+    labels = [item["customer_id"] for item in result]
+
     return {
         "status": "success",
-        "forecast": result
+        "forecast": forecast_values,
+        "dates": labels   # frontend will use this as x-axis
     }
