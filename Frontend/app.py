@@ -36,7 +36,10 @@ if "results" not in st.session_state:
 if run_clicked:
     with st.spinner("Running analysis..."):
 
-        forecast_data = get_forecast(sku, horizon)
+        forecast_data = {
+     "forecast": [120, 95, 110],
+     "dates": ["C1", "C2", "C3"]
+     }
         kpi_data = get_kpis()
 
         st.session_state.results = {
