@@ -49,8 +49,13 @@ def render_kpi_cards(kpi_data: dict, comparison: dict = None):
 def render_kpi_status_badge(kpi_data: dict):
     if not kpi_data:
         return
+
     sl  = kpi_data.get("service_level", 100)
     otd = kpi_data.get("on_time_delivery", 100)
+
+    # Guard: ensure both values are actual numbers before comparing
+    if not isinstance(sl, (int, float)) or not isinstance(otd, (int, float)):
+        return
 
     if sl >= 95 and otd >= 92:
         st.markdown("""
