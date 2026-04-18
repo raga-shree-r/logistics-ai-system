@@ -1,167 +1,130 @@
-🚀 Cognix — AI Logistics Intelligence Platform
-An end-to-end AI-powered logistics system that helps businesses predict demand, optimize delivery routes, simulate disruptions, detect anomalies, and monitor performance in real time.
+# CognixOps — AI Logistics Intelligence Platform
 
-📌 Overview
-CognixOps acts like a smart control tower for supply chains.
+CognixOps is an AI-powered logistics system that enables demand forecasting, route optimization, disruption simulation, anomaly detection, and real-time performance monitoring.
 
-It helps answer key questions:
+---
 
-📈 What will future demand look like?
+## Overview
 
-🚚 What is the best delivery route?
+CognixOps acts as a centralized decision-support system for supply chains, helping users predict demand, optimize operations, and evaluate system performance.
 
-⚠️ What happens if disruptions occur?
+---
 
-📊 How is the system performing?
+## Core Features
 
-🧠 Core Features
-🔮 Demand Forecasting
-Predicts future demand using historical data.
+* Demand Forecasting predicts future demand using historical data to improve inventory planning.
+* Route Optimization identifies the most efficient delivery routes based on cost, time, and environmental impact.
+* Disruption Simulation models real-world supply chain issues to estimate delays, cost changes, and service impact.
+* Anomaly Detection detects unusual demand patterns using statistical techniques.
+* KPI Dashboard provides real-time metrics such as service level, cost, and delivery performance.
 
-Benefits:
+---
 
-Avoid stockouts
+## Architecture
 
-Reduce excess inventory
-
-🚚 Route Optimization
-Finds the most efficient route based on:
-
-Cost 💰
-
-Speed ⏱️
-
-Environmental impact 🌱
-
-⚠️ Disruption Simulation
-Simulates real-world supply chain issues:
-
-Weather disruptions
-
-Supplier delays
-
-Transport failures
-
-Outputs:
-
-Delay impact
-
-Cost increase
-
-Service level drop
-
-🚨 Anomaly Detection
-Detects unusual demand spikes using statistical analysis.
-
-📊 KPI Dashboard
-Displays key performance metrics:
-
-Service Level
-
-Lead Time
-
-Total Cost
-
-CO₂ Emissions
-
-Delivery Performance
-
-🏗️ Architecture
-Frontend (Streamlit UI)
+```text
+Frontend (Streamlit)
         ↓
 Backend (FastAPI)
         ↓
-Data Layer (CSV + ML Models)
-📂 Project Structure
+Data Layer (CSV + Models)
+```
+
+---
+
+## Project Structure
+
+```text
 CognixOps/
 ├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── data/
-│   └── requirements.txt
-│
+│   └── app/
+│       ├── routes/
+│       ├── services/
+│       ├── models/
+│       └── data/
 └── frontend/
     ├── app.py
-    ├── config.py
     ├── components/
     ├── services/
     └── utils/
-🧪 Tech Stack
-Layer	Technology
-Frontend	Streamlit
-Backend	FastAPI
-Data Processing	Pandas
-Machine Learning	scikit-learn
-Optimization	SciPy
-Visualization	Plotly
-Maps	Folium
-▶️ Getting Started
-✅ Prerequisites
-Python 3.10+
+```
 
-pip
+---
 
-⚙️ Backend Setup
+## Tech Stack
+
+| Layer         | Technology   |
+| ------------- | ------------ |
+| Frontend      | Streamlit    |
+| Backend       | FastAPI      |
+| Data          | Pandas       |
+| ML            | scikit-learn |
+| Optimization  | SciPy        |
+| Visualization | Plotly       |
+| Maps          | Folium       |
+
+---
+
+## Setup
+
+### Backend
+
+```bash
 cd backend
 pip install -r requirements.txt
-
-# Generate datasets
 python app/data/generate_datasets.py
-
-# Run backend server
 uvicorn app.main:app --reload --port 8000
-Backend runs at:
-👉 http://localhost:8000
+```
 
-🖥️ Frontend Setup
+Runs at: [http://localhost:8000](http://localhost:8000)
+
+---
+
+### Frontend
+
+```bash
 cd frontend
 pip install -r requirements.txt
-
-# Run frontend
 streamlit run app.py
-Frontend runs at:
-👉 http://localhost:8501
+```
 
-🔌 API Endpoints
-Endpoint	Description
-/forecast	Predict demand
-/optimize	Optimize delivery routes
-/simulate	Simulate disruptions
-/kpi	Fetch KPI metrics
-/anomaly	Detect anomalies
-/health	API health check
-📊 Data Used
-demand_history.csv → Historical demand data
+Runs at: [http://localhost:8501](http://localhost:8501)
 
-route_options.csv → Transport routes
+---
 
-kpi_snapshots.csv → KPI baseline data
+## API Endpoints
 
-✨ Key Highlights
-Combines Machine Learning + Optimization + Analytics
+* /forecast returns predicted demand values.
+* /optimize computes optimal delivery routes.
+* /simulate evaluates disruption scenarios.
+* /kpi provides performance metrics.
+* /anomaly detects demand anomalies.
+* /health checks API status.
 
-Designed for real-world logistics problems
+---
 
-Modular and scalable architecture
+## Data
 
-Interactive dashboard for easy decision-making
+* demand_history.csv contains historical demand data.
+* route_options.csv stores route information.
+* kpi_snapshots.csv provides baseline metrics.
 
-🆕 Version 2.0 Updates
-Improved demand forecasting (seasonality + ML)
+---
 
-Advanced optimization (LP + MIP + Network Flow)
+## Highlights
 
-Realistic disruption simulations
+* Combines machine learning, optimization, and analytics in one system.
+* Uses a modular backend design for scalability.
+* Provides an interactive dashboard for decision-making.
 
-New anomaly detection module
+---
 
-Enhanced dashboard UI
+## Summary
 
-🎯 One-Line Summary
-CognixOps is an AI-powered platform that helps optimize supply chain decisions through forecasting, routing, simulation, and real-time analytics.
+CognixOps is an AI-based platform that improves supply chain efficiency through predictive analytics and optimization.
 
-📜 License
-This project is proprietary. All rights reserv
+---
+
+## License
+
+This project is proprietary and all rights are reserved.
