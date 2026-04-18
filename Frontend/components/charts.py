@@ -41,8 +41,16 @@ def render_forecast_chart(forecast_data: dict, anomaly_data: dict = None):
         st.warning("No forecast data available")
         return
 
-    forecast = forecast_data.get("forecast", [])
-    dates    = forecast_data.get("dates", [])
+    raw_forecast = forecast_data.get("forecast", [])
+
+# FIX: handle dict vs list
+    if raw_forecast and isinstance(raw_forecast[0], dict):
+        forecast = [item.get("value", 0) for item in raw_forecast]
+        dates = [item.get("date") for item in raw_forecast]
+    else:
+       forecast = raw_forecast
+       dates = forecast_data.get("dates", [])
+    
     lower    = forecast_data.get("lower", [])
     upper    = forecast_data.get("upper", [])
     sku      = forecast_data.get("sku", "")
